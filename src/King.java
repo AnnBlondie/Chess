@@ -1,9 +1,13 @@
+import javax.swing.ImageIcon;
+
 
 public class King extends Figure{
 	private String name ="K";
+	private ImageIcon image;
 	
 	public King(String color) {
 		super.setColor(color);
+		setImage();
 	}
 
 	public String getName() {
@@ -27,5 +31,20 @@ public class King extends Figure{
 			return false;
 		}
 	}
-	
+
+	@Override
+	ImageIcon getImage() {
+		return image;
+	}
+
+	@Override
+	void setImage() {
+		if(super.getColor().equals("b")){
+			image = new ImageIcon("black_king.png");
+		}
+		else{
+			image = new ImageIcon("white_king.png");
+		}
+	}
+
 }

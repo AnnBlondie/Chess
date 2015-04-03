@@ -1,9 +1,13 @@
+import javax.swing.ImageIcon;
+
 
 public class Queen extends Figure {
 	private String name ="Q";
+	private ImageIcon image;
 	
 	public Queen(String color) {
 		super.setColor(color);
+		setImage();
 	}
 	
 	public String getName() {
@@ -24,5 +28,19 @@ public class Queen extends Figure {
 			System.out.println("Impossible move for queen");	
 			return false;
 		}
-	}	
+	}
+	@Override
+	ImageIcon getImage() {
+		return image;
+	}
+
+	@Override
+	void setImage() {
+		if(super.getColor().equals("b")){
+			image = new ImageIcon("black_queen.png");
+		}
+		else{
+			image = new ImageIcon("white_queen.png");
+		}
+	}
 }

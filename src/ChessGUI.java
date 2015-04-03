@@ -1,80 +1,98 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
-class ChessGUI extends JFrame{
-	JButton b1;
-	JLabel l1;
-	
-	public ChessGUI()
-	{
-		setTitle("Background Color for JFrame");
-		//setSize(400,400);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-	
-		
-		setLayout(new BorderLayout());
-		JLabel background=new JLabel(new ImageIcon("minimap.jpg"));
-		add(background);
-		background.setLayout(new FlowLayout());
-		l1=new JLabel("Here is a button");
-		b1=new JButton("I am a button");
-		background.add(l1);
-		background.add(b1);
-		pack();
-	}
-	
-}
-
-/*
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
+
+public class ChessGUI extends JFrame {
 	
-public class ChessGUI {
-	private JFrame frame;
-	//private Icon ic=new ImageIcon(getClass().getResource("S.png"));
+	private JTextArea output = new JTextArea(2, 40);
+	private JTextField input = new JTextField();
+	private JPanel chess = new JPanel();
+	private JButton move = new JButton("move");
 	
-	public ChessGUI(String s) throws IOException{
-		initialize(s);
+ 	public ChessGUI(Figure[][] board){
+		initialize(board, "hi");
 	}
-	
-	public void addField(String s){
+
+	public void initialize(final Figure[][] board, String message){
+		setBounds(100, 100, 650, 550);
+		setTitle("Chess");
+		setLayout(new BorderLayout());
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-	}
-	
-	public void setVisible(boolean b){
-		frame.setVisible(b);
-	}
-	
-	private void initialize(String ss) throws IOException{
-		 String path = "minimap.jpg";
-	     File file = new File(path);
-	     BufferedImage image = ImageIO.read(file);
-	    JLabel label = new JLabel(new ImageIcon(image));
-	    JButton b = new JButton("but");
-	   // b.setBounds(10, 10, 100, 100);
-	    //    JFrame f = new JFrame();
-	       
-		frame = new JFrame();
-		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//JLabel t = new JLabel(ss);
-		//frame.getContentPane().add(t,"minimap.jpg");
-		 frame.getContentPane().add(b, );
-		frame.getContentPane().add(label);
+		setChess(board);
+		add(chess, BorderLayout.CENTER);
+
+		setOutput(message);
 		
-		frame.pack();
-		frame.setVisible(false);
+		
+		getContentPane().add(new JScrollPane(output), BorderLayout.SOUTH);
+		JPanel inputPanel = new JPanel();
+		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
+		input.setText("");
+		input.setBounds(2, 2, 10, 10);
+		//inputPanel.add(output);
+		inputPanel.add(input);
+		inputPanel.add(move);
+        add(inputPanel, BorderLayout.EAST);
+        
+		setVisible(true);
 	}
+
+	public void setOutput(String message) {
+        output.setEditable(false);
+        output.append("\n "+message);
+	}
+
+	public JTextField getInput() {
+		return input;
+	}
+
+	public JPanel getChess() {
+		return chess;
+	}
+	
+	public void setChess(Figure[][] board) {
+		chess.removeAll();
+		chess.setBounds(0, 0, 500, 500);
+		chess.setLayout(new GridLayout(10,10));
+		for(int i=0;i<10;i++){
+			for(int j=0;j<10;j++){
+				if(((i==0 || i==9) && j==0) || ((i==0 || i==9) && j==9)){
+					chess.add(new JPanel());
+				}
+				else if(i==0 || i==9 ){
+					chess.add(new JPanel().add(new JLabel(""+(char)(j+96), 0)));
+				}
+				else if(j==0 || j==9){
+					chess.add(new JPanel().add(new JLabel(""+(9-i), 0)));
+				}
+				else{
+					JPanel p = new JPanel();
+					if((i+j)%2==0)p.setBackground(Color.lightGray);
+					if(board[8-i][j-1]!=null){
+						p.add(new JLabel(board[8-i][j-1].getImage()));
+					}
+					chess.add(p);
+				}
+			}
+		}
+	}
+
+
+	public void addButtonListener(ActionListener enterListening){
+		move.addActionListener(enterListening);
+	}
+
 }
-*/

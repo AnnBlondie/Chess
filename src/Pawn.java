@@ -1,9 +1,13 @@
+import javax.swing.ImageIcon;
+
 
 public class Pawn extends Figure{
 	private String name ="p";
+	private ImageIcon image;
 	
 	public Pawn(String color) {
 		super.setColor(color);
+		setImage();
 	}
 
 	public String getName() {
@@ -28,6 +32,21 @@ public class Pawn extends Figure{
 		else {
 			System.out.println("Impossible move for pawn");	
 			return false;
+		}
+	}
+
+	@Override
+	ImageIcon getImage() {
+		return image;
+	}
+
+	@Override
+	void setImage() {
+		if(super.getColor().equals("b")){
+			image = new ImageIcon("black_paw.png");
+		}
+		else{
+			image = new ImageIcon("white_paw.png");
 		}
 	}
 }

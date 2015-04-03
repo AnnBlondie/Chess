@@ -1,9 +1,13 @@
+import javax.swing.ImageIcon;
+
 
 public class Bishop extends Figure{
 	private String name ="B";
+	private ImageIcon image;
 	
 	public Bishop(String color) {
 		super.setColor(color);
+		setImage();
 	}
 	
 	public String getName(){
@@ -22,5 +26,20 @@ public class Bishop extends Figure{
 		}
 		else {System.out.println("Impossible move for bishop");	
 		return false;}
+	}
+
+	@Override
+	ImageIcon getImage() {
+		return image;
+	}
+
+	@Override
+	void setImage() {
+		if(super.getColor().equals("b")){
+			image = new ImageIcon("black_bishop.png");
+		}
+		else{
+			image = new ImageIcon("white_bishop.png");
+		}
 	}
 }

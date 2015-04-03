@@ -1,7 +1,14 @@
+import javax.swing.ImageIcon;
+
 public abstract class Figure {
 		
 	private String color;
+	private ImageIcon image;
 	
+	abstract ImageIcon getImage();
+
+	abstract void setImage();
+
 	public Figure(){
 		setColor("");
 	}
@@ -18,4 +25,3 @@ public abstract class Figure {
 		this.color = color;
 	}
 }
-
